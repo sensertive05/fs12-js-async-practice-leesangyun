@@ -44,31 +44,69 @@ function renderTodos(todos) {
 
 // ============================================
 // 아래 4개의 함수를 완성하세요.
-// 각 함수가 어떤 역할을 하는지는 함수 이름과
-// renderTodos, 이벤트 연결 코드를 참고하세요.
 // ============================================
 
 // 할 일 목록 불러오기
 async function getTodos() {
-
+  try {
+    const response = await fetch(BASE_URL);
+    const todos = await response.json();
+    renderTodos(todos);
+  } catch (error) {
+    console.error("할 일 목록 불러오기 실패:", error);
+  }
 }
 
 // 새 할 일 추가하기
-// 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
 async function addTodo(title) {
+  try {
+    await fetch(BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        completed: false,
+      }),
+    });
 
+    getTodos();
+  } catch (error) {
+    console.error("할 일 추가 실패:", error);
+  }
 }
 
 // 할 일 완료 토글하기
-// 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
 async function toggleTodo(id, completed) {
+  try {
+    await fetch(`${BASE_URL}/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        completed: !completed,
+      }),
+    });
 
+    getTodos();
+  } catch (error) {
+    console.error("할 일 토글 실패:", error);
+  }
 }
 
 // 할 일 삭제하기
-// 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
 async function deleteTodo(id) {
+  try {
+    await fetch(`${BASE_URL}/${id}`, {
+      method: "DELETE",
+    });
 
+    getTodos();
+  } catch (error) {
+    console.error("할 일 삭제 실패:", error);
+  }
 }
 
 // ============================================

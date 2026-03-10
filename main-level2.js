@@ -9,40 +9,99 @@ const todoInputEl = document.getElementById("todo-input");
 
 // ============================================
 // 아래 4개의 함수를 완성하세요.
-//
-// - getTodos: 할 일 목록을 불러와서 화면에 그립니다.
-// - addTodo: 새 할 일을 추가하고 목록을 새로고침합니다.
-// - toggleTodo: 완료 상태를 토글하고 목록을 새로고침합니다.
-// - deleteTodo: 할 일을 삭제하고 목록을 새로고침합니다.
-//
-// 화면 그리기(DOM 조작)도 직접 구현해야 합니다.
-// index.html의 구조와 style.css의 클래스명을 참고하세요.
-//
-// HTML 구조 참고:
-//   <li class="todo-item completed">
-//     <span class="title">제목</span>
-//     <button class="btn-toggle">완료됨</button>
-//     <button class="btn-delete">삭제</button>
-//   </li>
-//
-// - completed인 항목은 li에 "completed" 클래스 추가
-// - 토글 버튼 텍스트: completed면 "완료됨", 아니면 "미완료"
 // ============================================
 
 async function getTodos() {
+  try {
+    const response = await fetch(BASE_URL);
+    const todos = await response.json();
 
+    todoListEl.innerHTML = "";
+
+    todos.forEach(function (todo) {
+      const li = document.createElement("li");
+      li.className = "todo-item";
+
+      if (todo.completed) {
+        li.classList.add("completed");
+      }
+
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "title";
+      titleSpan.textContent = todo.title;
+
+      const toggleBtn = document.createElement("button");
+      toggleBtn.className = "btn-toggle";
+      toggleBtn.textContent = todo.completed ? "완료됨" : "미완료";
+      toggleBtn.addEventListener("click", function () {
+        toggleTodo(todo.id, todo.completed);
+      });
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "btn-delete";
+      deleteBtn.textContent = "삭제";
+      deleteBtn.addEventListener("click", function () {
+        deleteTodo(todo.id);
+      });
+
+      li.appendChild(titleSpan);
+      li.appendChild(toggleBtn);
+      li.appendChild(deleteBtn);
+
+      todoListEl.appendChild(li);
+    });
+  } catch (error) {
+    console.error("할 일 목록 불러오기 실패:", error);
+  }
 }
 
 async function addTodo(title) {
+  try {
+    await fetch(BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title,
+        completed: false,
+      }),
+    });
 
+    await getTodos();
+  } catch (error) {
+    console.error("할 일 추가 실패:", error);
+  }
 }
 
 async function toggleTodo(id, completed) {
+  try {
+    await fetch(`${BASE_URL}/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        completed: !completed,
+      }),
+    });
 
+    await getTodos();
+  } catch (error) {
+    console.error("할 일 상태 변경 실패:", error);
+  }
 }
 
 async function deleteTodo(id) {
+  try {
+    await fetch(`${BASE_URL}/${id}`, {
+      method: "DELETE",
+    });
 
+    await getTodos();
+  } catch (error) {
+    console.error("할 일 삭제 실패:", error);
+  }
 }
 
 // ============================================
