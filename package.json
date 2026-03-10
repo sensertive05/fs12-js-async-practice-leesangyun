@@ -1,0 +1,8 @@
+{
+  "name": "js-async-practice",
+  "version": "1.0.0",
+  "description": "Fetch API 연습 과제 - 할 일 목록 앱",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}

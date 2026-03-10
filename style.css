@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+/* 입력 폼 */
+#todo-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+#todo-input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#todo-input:focus {
+  border-color: #4a90d9;
+}
+
+#todo-form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4a90d9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#todo-form button:hover {
+  background-color: #357abd;
+}
+
+/* 할 일 목록 */
+#todo-list {
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.todo-item .title {
+  flex: 1;
+  font-size: 16px;
+}
+
+.todo-item.completed .title {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-item .btn-toggle {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.todo-item .btn-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.todo-item.completed .btn-toggle {
+  background-color: #e8f5e9;
+  border-color: #a5d6a7;
+  color: #2e7d32;
+}
+
+.todo-item .btn-delete {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ffcdd2;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #c62828;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.todo-item .btn-delete:hover {
+  background-color: #ffebee;
+}
